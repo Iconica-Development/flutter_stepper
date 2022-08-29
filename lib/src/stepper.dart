@@ -61,7 +61,7 @@ class MultiStepperView extends StatelessWidget {
             padding: EdgeInsets.only(left: paddingLeft, right: paddingRight),
             child: Column(
               children: [
-                Text(currentStep.toString()),
+                Text((currentStep + (zeroIndexed ? 0 : 1)).toString()),
                 Padding(
                   padding: EdgeInsets.only(top: theme.linePadding),
                   child: Container(

@@ -13,7 +13,7 @@ See [Example Code](example/lib/main.dart) for more info.
 
 ## Issues
 
-Please file any issues, bugs or feature request as an issue on our [GitHub](REPO URL) page. Commercial support is available if you need help with integration with your app or services. You can contact us at [support@iconica.nl](mailto:support@iconica.nl).
+Please file any issues, bugs or feature request as an issue on our [GitHub](https://github.com/Iconica-Development/stepper) page. Commercial support is available if you need help with integration with your app or services. You can contact us at [support@iconica.nl](mailto:support@iconica.nl).
 
 ## Want to contribute
 
@@ -21,4 +21,4 @@ If you would like to contribute to the plugin (e.g. by improving the documentati
 
 ## Author
 
-This <PACKAGE NAME> for Flutter is developed by [Iconica](https://iconica.nl). You can contact us at <support@iconica.nl>
+This stepper for Flutter is developed by [Iconica](https://iconica.nl). You can contact us at <support@iconica.nl>
