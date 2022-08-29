@@ -24,30 +24,27 @@ class _StepperDemoState extends State<StepperDemo> {
           left: MediaQuery.of(context).size.width * 0.05,
           top: MediaQuery.of(context).size.height * 0.05,
         ),
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  const Text('Show all steps'),
-                  Switch(
-                    value: _showAllSteps,
-                    onChanged: (value) {
-                      setState(() {
-                        _showAllSteps = value;
-                      });
-                    },
-                  ),
-                ],
-              ),
-              if (_showAllSteps) ...[
-                const VerticalSinglePageStepper()
-              ] else ...[
-                const VerticalMultiPageStepper(),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                const Text('Show all steps'),
+                Switch(
+                  value: _showAllSteps,
+                  onChanged: (value) {
+                    setState(() {
+                      _showAllSteps = value;
+                    });
+                  },
+                ),
               ],
+            ),
+            if (_showAllSteps) ...[
+              const VerticalSinglePageStepper()
+            ] else ...[
+              const VerticalMultiPageStepper(),
             ],
-          ),
+          ],
         ),
       ),
     );
