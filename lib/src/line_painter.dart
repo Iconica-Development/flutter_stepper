@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class VerticalDashedLinePainter extends CustomPainter {
+  /// Draws a dashed line between two vertical points.
   const VerticalDashedLinePainter({
     required this.dashHeight,
     required this.dashSpace,
@@ -8,12 +9,16 @@ class VerticalDashedLinePainter extends CustomPainter {
     required this.dashColor,
   });
 
+  /// The height of the dashes.
   final double dashHeight;
 
+  /// The space between the dashes.
   final double dashSpace;
 
+  /// The width of the line.
   final double strokeWidth;
 
+  /// The color of the line.
   final Color dashColor;
 
   @override

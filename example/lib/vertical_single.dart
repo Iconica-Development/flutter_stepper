@@ -21,6 +21,10 @@ class _VerticalSinglePageStepperState extends State<VerticalSinglePageStepper> {
           child: MultiStepperView(
             showAllSteps: true,
             currentStep: _currentStep,
+            zeroIndexed: false,
+            onStepTapped: (value) {
+              debugPrint('step tapped: ${value + 1}');
+            },
             steps: [
               MultiViewStep(
                 content: Column(
@@ -30,6 +34,7 @@ class _VerticalSinglePageStepperState extends State<VerticalSinglePageStepper> {
                     Text('Datum', style: Theme.of(context).textTheme.bodyText2),
                   ],
                 ),
+                size: 100,
               ),
               MultiViewStep(
                 content: Column(
@@ -42,9 +47,6 @@ class _VerticalSinglePageStepperState extends State<VerticalSinglePageStepper> {
                     Text(
                       'Selecteer een tijd',
                       style: Theme.of(context).textTheme.bodyText2,
-                    ),
-                    const SizedBox(
-                      height: 50,
                     ),
                   ],
                 ),

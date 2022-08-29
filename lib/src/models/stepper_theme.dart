@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
 class StepperTheme {
+  /// The theme for the [MultiStepperView].
   const StepperTheme({
     this.linePadding = 10,
     this.lineWidth = 2,
     this.lineDashLength = 5,
     this.lineDashGapLength = 3,
     this.lineColor = Colors.black,
+    this.stepIndicatorTextStyle,
   });
 
   /// The padding between the start of the line and the stepper indicator.
@@ -23,4 +25,7 @@ class StepperTheme {
 
   /// The color of the line.
   final Color lineColor;
+
+  /// The style of the step indicator text.
+  final TextStyle? stepIndicatorTextStyle;
 }

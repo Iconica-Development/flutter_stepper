@@ -3,12 +3,20 @@ import 'package:stepper/src/line_painter.dart';
 import 'package:stepper/stepper.dart';
 
 class MultiStepperView extends StatelessWidget {
+  /// MultiStepperView is a widget that displays a vertical list of steps.
+  /// Each step is represented by a [MultiViewStep] widget.
+  /// Steps can either be displayed in a single page or in multiple pages.
+  /// If the steps are displayed in multiple pages, the [currentStep] property
+  /// determines which page is displayed.
+  /// The height of the page is determined by the height of the containing
+  /// widget or by the [size] property.
+  /// Style can be customized by setting the [theme] property.
   const MultiStepperView({
     required this.steps,
     this.currentStep = 0,
     this.showAllSteps = false,
-    this.onStepContinue,
-    this.onStepCancel,
+    this.zeroIndexed = false,
+    this.onStepTapped,
     this.paddingLeft = 10,
     this.paddingRight = 20,
     this.pageHeight = 400,
@@ -25,14 +33,19 @@ class MultiStepperView extends StatelessWidget {
   /// Whether two show all the [steps] or just the current one.
   final bool showAllSteps;
 
-  final VoidCallback? onStepContinue;
+  /// Whether to show 0 as the first step.
+  final bool zeroIndexed;
 
-  final VoidCallback? onStepCancel;
+  // int callback for step clicked
+  final ValueChanged<int>? onStepTapped;
 
+  /// The padding between the start and the line of the stepper.
   final double paddingLeft;
 
+  /// The padding between the line and the step indicator.
   final double paddingRight;
 
+  /// The height of the page.
   final double pageHeight;
 
   /// The theme of the stepper.
@@ -44,21 +57,22 @@ class MultiStepperView extends StatelessWidget {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // draw a line below the current step
           Padding(
             padding: EdgeInsets.only(left: paddingLeft, right: paddingRight),
             child: Column(
               children: [
                 Text(currentStep.toString()),
-                Container(
-                  width: 1,
-                  height: pageHeight,
-                  color: Colors.black,
+                Padding(
+                  padding: EdgeInsets.only(top: theme.linePadding),
+                  child: Container(
+                    width: 1,
+                    height: pageHeight,
+                    color: Colors.black,
+                  ),
                 ),
               ],
             ),
           ),
-
           steps[currentStep].content,
         ],
       );
@@ -76,14 +90,22 @@ class MultiStepperView extends StatelessWidget {
                       padding: EdgeInsets.only(right: paddingRight),
                       child: Column(
                         children: [
-                          Padding(
-                            padding: EdgeInsets.only(
-                              bottom: theme.linePadding,
-                              top: theme.linePadding,
+                          GestureDetector(
+                            onTap: () {
+                              onStepTapped?.call(i);
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                bottom: theme.linePadding,
+                                top: theme.linePadding,
+                              ),
+                              child: Text(
+                                (i + (zeroIndexed ? 0 : 1)).toString(),
+                                style: theme.stepIndicatorTextStyle ??
+                                    Theme.of(context).textTheme.bodyText2,
+                              ),
                             ),
-                            child: Text((i + 1).toString()),
                           ),
-                          // draw dotted line below the current step
                           if (i < currentStep) ...[
                             Expanded(
                               child: Container(
@@ -92,7 +114,6 @@ class MultiStepperView extends StatelessWidget {
                               ),
                             ),
                           ] else ...[
-                            // dotted line
                             Expanded(
                               child: CustomPaint(
                                 painter: VerticalDashedLinePainter(
@@ -111,7 +132,14 @@ class MultiStepperView extends StatelessWidget {
                   Column(
                     children: [
                       SizedBox(height: theme.linePadding),
-                      steps[i].content,
+                      if (steps[i].size != null) ...[
+                        SizedBox(
+                          height: steps[i].size,
+                          child: steps[i].content,
+                        ),
+                      ] else ...[
+                        steps[i].content,
+                      ],
                     ],
                   ),
                 ],
