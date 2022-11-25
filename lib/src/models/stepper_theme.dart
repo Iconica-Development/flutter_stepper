@@ -13,6 +13,9 @@ class StepperTheme {
     this.lineDashGapLength = 3,
     this.lineColor = Colors.black,
     this.stepIndicatorTextStyle,
+    this.stepIndicatorSize = 30,
+    this.iconDone = Icons.check,
+    this.iconSize = 20,
   });
 
   /// The padding between the start of the line and the stepper indicator.
@@ -32,4 +35,13 @@ class StepperTheme {
 
   /// The style of the step indicator text.
   final TextStyle? stepIndicatorTextStyle;
+
+  /// Height and width of the step indicator.
+  final double stepIndicatorSize;
+
+  /// The icon to show when the step is done.
+  final IconData iconDone;
+
+  /// The size of the icon.
+  final double iconSize;
 }

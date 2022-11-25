@@ -65,13 +65,27 @@ class MultiStepperView extends StatelessWidget {
             padding: EdgeInsets.only(left: paddingLeft, right: paddingRight),
             child: Column(
               children: [
-                Text((currentStep + (zeroIndexed ? 0 : 1)).toString()),
+                Container(
+                  width: theme.stepIndicatorSize,
+                  height: theme.stepIndicatorSize,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: theme.lineColor,
+                  ),
+                  child: Center(
+                    child: Text(
+                      (currentStep + (zeroIndexed ? 0 : 1)).toString(),
+                      style: theme.stepIndicatorTextStyle ??
+                          Theme.of(context).textTheme.bodyText2,
+                    ),
+                  ),
+                ),
                 Padding(
                   padding: EdgeInsets.only(top: theme.linePadding),
                   child: Container(
                     width: 1,
                     height: pageHeight,
-                    color: Colors.black,
+                    color: theme.lineColor,
                   ),
                 ),
               ],
@@ -103,10 +117,29 @@ class MultiStepperView extends StatelessWidget {
                                 bottom: theme.linePadding,
                                 top: theme.linePadding,
                               ),
-                              child: Text(
-                                (i + (zeroIndexed ? 0 : 1)).toString(),
-                                style: theme.stepIndicatorTextStyle ??
-                                    Theme.of(context).textTheme.bodyText2,
+                              child: Container(
+                                width: theme.stepIndicatorSize,
+                                height: theme.stepIndicatorSize,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: theme.lineColor,
+                                ),
+                                child: Center(
+                                  child: currentStep >
+                                          (i + (zeroIndexed ? 0 : 1))
+                                      ? Icon(
+                                          theme.iconDone,
+                                          size: theme.iconSize,
+                                        )
+                                      : Text(
+                                          (i + (zeroIndexed ? 0 : 1))
+                                              .toString(),
+                                          style: theme.stepIndicatorTextStyle ??
+                                              Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText2,
+                                        ),
+                                ),
                               ),
                             ),
                           ),

@@ -1,6 +1,6 @@
 name: stepper
 description: Flutter package to create a Stepper widget that can be used to display a sequence of steps with a line between each step.
-version: 0.0.1
+version: 0.0.2
 homepage: https://github.com/Iconica-Development/stepper
 
 environment:
