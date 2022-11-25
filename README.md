@@ -1,11 +1,14 @@
 # stepper
+
 A Flutter package for creating a list of steps that are horizontally aligned. The steps can contain a widget and between each step a line is drawn.
 
 Supports all Flutter platforms.
 
+![screenshot of component](./screenshot.png)
+
 ## Usage
 
-To use this package, add `stepper` as a [dependency in your pubspec.yaml file](https://flutter.dev/docs/development/platform-integration/platform-channels).
+To use this package, add `flutter_stepper` as a [dependency in your pubspec.yaml file](https://flutter.dev/docs/development/platform-integration/platform-channels).
 
 ### Example
 
@@ -21,4 +24,4 @@ If you would like to contribute to the plugin (e.g. by improving the documentati
 
 ## Author
 
-This stepper for Flutter is developed by [Iconica](https://iconica.nl). You can contact us at <support@iconica.nl>
+This flutter_stepper for Flutter is developed by [Iconica](https://iconica.nl). You can contact us at <support@iconica.nl>

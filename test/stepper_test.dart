@@ -4,7 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:stepper/stepper.dart';
+import 'package:flutter_stepper/stepper.dart';
 
 void main() {
   testWidgets('MultiStepperView has a step indicator', (tester) async {

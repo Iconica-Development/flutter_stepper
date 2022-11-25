@@ -3,8 +3,8 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import 'package:flutter/material.dart';
-import 'package:stepper/src/line_painter.dart';
-import 'package:stepper/stepper.dart';
+import 'package:flutter_stepper/src/line_painter.dart';
+import 'package:flutter_stepper/stepper.dart';
 
 class MultiStepperView extends StatelessWidget {
   /// MultiStepperView is a widget that displays a vertical list of steps.

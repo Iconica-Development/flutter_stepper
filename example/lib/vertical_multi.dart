@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import 'package:flutter/material.dart';
-import 'package:stepper/stepper.dart';
+import 'package:flutter_stepper/stepper.dart';
 
 class VerticalMultiPageStepper extends StatefulWidget {
   const VerticalMultiPageStepper({Key? key}) : super(key: key);
