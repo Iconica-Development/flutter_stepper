@@ -29,7 +29,7 @@ class VerticalDashedLinePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     var startY = 0.0;
     var paint = Paint()
-      ..color = Colors.grey
+      ..color = dashColor
       ..strokeWidth = strokeWidth;
     while (startY < size.height) {
       canvas.drawLine(Offset(0, startY), Offset(0, startY + dashHeight), paint);

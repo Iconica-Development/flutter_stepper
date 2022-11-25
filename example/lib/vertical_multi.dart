@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import 'package:flutter/material.dart';
-import 'package:stepper/stepper.dart';
+import 'package:flutter_stepper/stepper.dart';
 
 class VerticalMultiPageStepper extends StatefulWidget {
   const VerticalMultiPageStepper({Key? key}) : super(key: key);
@@ -29,9 +29,17 @@ class _VerticalMultiPageStepperState extends State<VerticalMultiPageStepper> {
             'eiusmod tempor incididunt ut labore et dolore magna aliqua. '
             'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris'
             ' nisi ut aliquip ex ea commodo consequat.',
+            style: TextStyle(color: Colors.white),
           ),
         ),
         MultiStepperView(
+          theme: StepperTheme(
+            stepIndicatorTextStyle:
+                Theme.of(context).textTheme.bodyText2?.copyWith(
+                      color: Colors.black,
+                    ),
+            lineColor: Colors.white,
+          ),
           showAllSteps: false,
           currentStep: _currentStep,
           steps: [
@@ -39,33 +47,51 @@ class _VerticalMultiPageStepperState extends State<VerticalMultiPageStepper> {
               content: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Wie ben je?'),
+                  const Text(
+                    'Wie ben je?',
+                    style: TextStyle(color: Colors.white),
+                  ),
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text('Hobbies, wat vind je leuk om te doen?'),
+                  const Text(
+                    'Hobbies, wat vind je leuk om te doen?',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ],
               ),
             ),
             MultiViewStep(
               content: Column(
                 children: [
-                  const Text('Upload profiel foto'),
+                  const Text(
+                    'Upload profiel foto',
+                    style: TextStyle(color: Colors.white),
+                  ),
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text('Laat je zien aan je collega\'s'),
+                  const Text(
+                    'Laat je zien aan je collega\'s',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ],
               ),
             ),
             MultiViewStep(
               content: Column(
                 children: [
-                  const Text('Smoelenboek'),
+                  const Text(
+                    'Smoelenboek',
+                    style: TextStyle(color: Colors.white),
+                  ),
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text('Wat mogen collega\'s'),
+                  const Text(
+                    'Wat mogen collega\'s',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ],
               ),
             ),

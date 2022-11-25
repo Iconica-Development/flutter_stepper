@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import 'package:flutter/material.dart';
-import 'package:stepper/stepper.dart';
+import 'package:flutter_stepper/stepper.dart';
 
 class VerticalSinglePageStepper extends StatefulWidget {
   const VerticalSinglePageStepper({Key? key}) : super(key: key);
@@ -23,6 +23,13 @@ class _VerticalSinglePageStepperState extends State<VerticalSinglePageStepper> {
         SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: MultiStepperView(
+            theme: StepperTheme(
+              stepIndicatorTextStyle:
+                  Theme.of(context).textTheme.bodyText2?.copyWith(
+                        color: Colors.black,
+                      ),
+              lineColor: Colors.white,
+            ),
             showAllSteps: true,
             currentStep: _currentStep,
             zeroIndexed: false,
@@ -34,8 +41,18 @@ class _VerticalSinglePageStepperState extends State<VerticalSinglePageStepper> {
                 content: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Datum', style: Theme.of(context).textTheme.headline6),
-                    Text('Datum', style: Theme.of(context).textTheme.bodyText2),
+                    Text(
+                      'Datum',
+                      style: Theme.of(context).textTheme.headline6?.copyWith(
+                            color: Colors.white,
+                          ),
+                    ),
+                    Text(
+                      'Datum',
+                      style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                            color: Colors.white,
+                          ),
+                    ),
                   ],
                 ),
                 size: 100,
@@ -46,11 +63,15 @@ class _VerticalSinglePageStepperState extends State<VerticalSinglePageStepper> {
                   children: [
                     Text(
                       'Tijd',
-                      style: Theme.of(context).textTheme.headline6,
+                      style: Theme.of(context).textTheme.headline6?.copyWith(
+                            color: Colors.white,
+                          ),
                     ),
                     Text(
                       'Selecteer een tijd',
-                      style: Theme.of(context).textTheme.bodyText2,
+                      style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                            color: Colors.white,
+                          ),
                     ),
                   ],
                 ),
@@ -59,8 +80,18 @@ class _VerticalSinglePageStepperState extends State<VerticalSinglePageStepper> {
                 content: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Product'),
-                    const Text('Welk product'),
+                    const Text(
+                      'Product',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    const Text(
+                      'Welk product',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
                     const SizedBox(height: 50),
                   ],
                 ),
@@ -69,8 +100,18 @@ class _VerticalSinglePageStepperState extends State<VerticalSinglePageStepper> {
                 content: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Temperatuur'),
-                    const Text('Selecteer gemeten temperatuur'),
+                    const Text(
+                      'Temperatuur',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    const Text(
+                      'Selecteer gemeten temperatuur',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
                     const SizedBox(height: 50),
                   ],
                 ),
@@ -79,8 +120,18 @@ class _VerticalSinglePageStepperState extends State<VerticalSinglePageStepper> {
                 content: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Norm'),
-                    const Text('Selecteer gemeten temperatuur'),
+                    const Text(
+                      'Norm',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    const Text(
+                      'Selecteer gemeten temperatuur',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
                     const SizedBox(height: 50),
                   ],
                 ),
@@ -88,13 +139,30 @@ class _VerticalSinglePageStepperState extends State<VerticalSinglePageStepper> {
               MultiViewStep(
                 content: Column(
                   children: [
-                    const Text('Maatregel'),
-                    const Text('Omschrijving'),
+                    const Text(
+                      'Maatregel',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    const Text(
+                      'Omschrijving',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
                     const SizedBox(height: 50),
                   ],
                 ),
               ),
-              const MultiViewStep(content: Text('Akkoord')),
+              const MultiViewStep(
+                content: Text(
+                  'Akkoord',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
             ],
           ),
         ),

@@ -23,6 +23,7 @@ class _StepperDemoState extends State<StepperDemo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: Padding(
         padding: EdgeInsets.only(
           left: MediaQuery.of(context).size.width * 0.05,
@@ -32,7 +33,12 @@ class _StepperDemoState extends State<StepperDemo> {
           children: [
             Row(
               children: [
-                const Text('Show all steps'),
+                const Text(
+                  'Show all steps',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
                 Switch(
                   value: _showAllSteps,
                   onChanged: (value) {
