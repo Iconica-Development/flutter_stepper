@@ -11,6 +11,7 @@ class MultiViewStep {
     required this.content,
     this.title = '',
     this.size,
+    this.hidden = false,
   });
 
   // The Title of the step
@@ -22,4 +23,6 @@ class MultiViewStep {
   // The size of the step, if not provided it will be calculated
   // Use this mainly if you want longer steps
   final double? size;
+
+  final bool hidden;
 }

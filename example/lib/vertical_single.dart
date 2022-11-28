@@ -24,7 +24,7 @@ class _VerticalSinglePageStepperState extends State<VerticalSinglePageStepper> {
           scrollDirection: Axis.vertical,
           child: MultiStepperView(
             theme: StepperTheme(
-              stepIndicatorTextStyle:
+              stepIndicatorTextStyleActive:
                   Theme.of(context).textTheme.bodyText2?.copyWith(
                         color: Colors.black,
                       ),
