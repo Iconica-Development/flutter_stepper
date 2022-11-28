@@ -34,7 +34,7 @@ class _VerticalMultiPageStepperState extends State<VerticalMultiPageStepper> {
         ),
         MultiStepperView(
           theme: StepperTheme(
-            stepIndicatorTextStyle:
+            stepIndicatorTextStyleActive:
                 Theme.of(context).textTheme.bodyText2?.copyWith(
                       color: Colors.black,
                     ),
