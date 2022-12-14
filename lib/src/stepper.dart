@@ -101,151 +101,155 @@ class MultiStepperView extends StatelessWidget {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
-            children: [
-              for (var i = 0; i < steps.length; i++)
-                IntrinsicHeight(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      // draw a line below the current step
-                      Container(
-                        child: Padding(
-                          padding: EdgeInsets.only(right: paddingRight),
-                          child: Column(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  onStepTapped?.call(i);
-                                },
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                    bottom: theme.linePadding,
-                                    top: theme.linePadding,
-                                  ),
-                                  child: Container(
-                                    width: theme.stepIndicatorSize,
-                                    height: theme.stepIndicatorSize,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                        color: theme
-                                                .stepIndicatorTextStyleInactive
-                                                ?.color ??
-                                            Colors.black,
-                                      ),
-                                      color: currentStep == i
-                                          ? theme.stepIndicatorTextStyleInactive
-                                              ?.color
-                                          : currentStep >=
-                                                  (i + (zeroIndexed ? 0 : 1))
-                                              ? theme
-                                                  .stepIndicatorTextStyleInactive
-                                                  ?.color
-                                              : theme
-                                                  .stepIndicatorTextStyleActive
-                                                  ?.color,
+          Expanded(
+            child: Column(
+              children: [
+                for (var i = 0; i < steps.length; i++) ...[
+                  IntrinsicHeight(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        // draw a line below the current step
+                        Container(
+                          child: Padding(
+                            padding: EdgeInsets.only(right: paddingRight),
+                            child: Column(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    onStepTapped?.call(i);
+                                  },
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                      bottom: theme.linePadding,
+                                      top: theme.linePadding,
                                     ),
-                                    child: Center(
-                                      child: currentStep >=
-                                              (i + (zeroIndexed ? 0 : 1))
-                                          ? Icon(
-                                              theme.iconDone,
-                                              size: theme.iconSize,
-                                              color: currentStep == i
-                                                  ? theme
-                                                      .stepIndicatorTextStyleActive
-                                                      ?.color
-                                                  : currentStep >=
-                                                          (i +
-                                                              (zeroIndexed
-                                                                  ? 0
-                                                                  : 1))
-                                                      ? theme
-                                                          .stepIndicatorTextStyleActive
-                                                          ?.color
-                                                      : theme.stepIndicatorTextStyleInactive
-                                                              ?.color ??
-                                                          Theme.of(context)
-                                                              .textTheme
-                                                              .bodyText2
-                                                              ?.color,
-                                            )
-                                          : Text(
-                                              (i + (zeroIndexed ? 0 : 1))
-                                                  .toString(),
-                                              style: currentStep == i
-                                                  ? theme
-                                                      .stepIndicatorTextStyleActive
-                                                  : theme.stepIndicatorTextStyleInactive ??
-                                                      Theme.of(context)
-                                                          .textTheme
-                                                          .bodyText2,
-                                            ),
+                                    child: Container(
+                                      width: theme.stepIndicatorSize,
+                                      height: theme.stepIndicatorSize,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                          color: theme
+                                                  .stepIndicatorTextStyleInactive
+                                                  ?.color ??
+                                              Colors.black,
+                                        ),
+                                        color: currentStep == i
+                                            ? theme
+                                                .stepIndicatorTextStyleInactive
+                                                ?.color
+                                            : currentStep >=
+                                                    (i + (zeroIndexed ? 0 : 1))
+                                                ? theme
+                                                    .stepIndicatorTextStyleInactive
+                                                    ?.color
+                                                : theme
+                                                    .stepIndicatorTextStyleActive
+                                                    ?.color,
+                                      ),
+                                      child: Center(
+                                        child: currentStep >=
+                                                (i + (zeroIndexed ? 0 : 1))
+                                            ? Icon(
+                                                theme.iconDone,
+                                                size: theme.iconSize,
+                                                color: currentStep == i
+                                                    ? theme
+                                                        .stepIndicatorTextStyleActive
+                                                        ?.color
+                                                    : currentStep >=
+                                                            (i +
+                                                                (zeroIndexed
+                                                                    ? 0
+                                                                    : 1))
+                                                        ? theme
+                                                            .stepIndicatorTextStyleActive
+                                                            ?.color
+                                                        : theme.stepIndicatorTextStyleInactive
+                                                                ?.color ??
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .bodyText2
+                                                                ?.color,
+                                              )
+                                            : Text(
+                                                (i + (zeroIndexed ? 0 : 1))
+                                                    .toString(),
+                                                style: currentStep == i
+                                                    ? theme
+                                                        .stepIndicatorTextStyleActive
+                                                    : theme.stepIndicatorTextStyleInactive ??
+                                                        Theme.of(context)
+                                                            .textTheme
+                                                            .bodyText2,
+                                              ),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              if (i < currentStep) ...[
-                                Expanded(
-                                  child: Container(
-                                    width: theme.lineWidth,
-                                    color: theme.lineColor,
+                                if (i < currentStep) ...[
+                                  Expanded(
+                                    child: Container(
+                                      width: theme.lineWidth,
+                                      color: theme.lineColor,
+                                    ),
                                   ),
+                                ] else ...[
+                                  Expanded(
+                                    child: CustomPaint(
+                                      painter: VerticalDashedLinePainter(
+                                        dashColor: theme.lineColor,
+                                        dashHeight: theme.lineDashLength,
+                                        dashSpace: theme.lineDashGapLength,
+                                        strokeWidth: theme.lineWidth,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ],
+                            ),
+                          ),
+                        ),
+                        Column(
+                          children: [
+                            SizedBox(height: theme.linePadding),
+                            if (steps[i].size != null) ...[
+                              if (!showAllStepExpandedOne &&
+                                  !steps[i].hidden) ...[
+                                SizedBox(
+                                  height: steps[i].size,
+                                  child: steps[i].content,
                                 ),
                               ] else ...[
-                                Expanded(
-                                  child: CustomPaint(
-                                    painter: VerticalDashedLinePainter(
-                                      dashColor: theme.lineColor,
-                                      dashHeight: theme.lineDashLength,
-                                      dashSpace: theme.lineDashGapLength,
-                                      strokeWidth: theme.lineWidth,
-                                    ),
-                                  ),
+                                SizedBox(
+                                  height: i == steps.length - 1
+                                      ? 0
+                                      : theme.emptyHeight,
+                                  width: theme.emptyWidth,
+                                ),
+                              ],
+                            ] else ...[
+                              if (!showAllStepExpandedOne &&
+                                  !steps[i].hidden) ...[
+                                steps[i].content,
+                              ] else ...[
+                                SizedBox(
+                                  height: i == steps.length - 1
+                                      ? 0
+                                      : theme.emptyHeight,
+                                  width: theme.emptyWidth,
                                 ),
                               ],
                             ],
-                          ),
-                        ),
-                      ),
-                      Column(
-                        children: [
-                          SizedBox(height: theme.linePadding),
-                          if (steps[i].size != null) ...[
-                            if (!showAllStepExpandedOne &&
-                                !steps[i].hidden) ...[
-                              SizedBox(
-                                height: steps[i].size,
-                                child: steps[i].content,
-                              ),
-                            ] else ...[
-                              SizedBox(
-                                height: i == steps.length - 1
-                                    ? 0
-                                    : theme.emptyHeight,
-                                width: theme.emptyWidth,
-                              ),
-                            ],
-                          ] else ...[
-                            if (!showAllStepExpandedOne &&
-                                !steps[i].hidden) ...[
-                              steps[i].content,
-                            ] else ...[
-                              SizedBox(
-                                height: i == steps.length - 1
-                                    ? 0
-                                    : theme.emptyHeight,
-                                width: theme.emptyWidth,
-                              ),
-                            ],
                           ],
-                        ],
-                      ),
-                    ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-            ],
+                ],
+              ],
+            ),
           ),
           if (showAllStepExpandedOne && !steps[currentStep].hidden) ...[
             Padding(

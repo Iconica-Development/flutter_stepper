@@ -63,6 +63,7 @@ class _VerticalMultiPageStepperState extends State<VerticalMultiPageStepper> {
             ),
             MultiViewStep(
               content: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
                     'Upload profiel foto',
@@ -80,6 +81,7 @@ class _VerticalMultiPageStepperState extends State<VerticalMultiPageStepper> {
             ),
             MultiViewStep(
               content: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
                     'Smoelenboek',

@@ -28,6 +28,10 @@ class _VerticalSinglePageStepperState extends State<VerticalSinglePageStepper> {
                   Theme.of(context).textTheme.bodyText2?.copyWith(
                         color: Colors.black,
                       ),
+              stepIndicatorTextStyleInactive:
+                  Theme.of(context).textTheme.bodyText2?.copyWith(
+                        color: Colors.white,
+                      ),
               lineColor: Colors.white,
             ),
             showAllSteps: true,
@@ -48,14 +52,14 @@ class _VerticalSinglePageStepperState extends State<VerticalSinglePageStepper> {
                           ),
                     ),
                     Text(
-                      'Datum',
+                      'Selecteer een datum',
                       style: Theme.of(context).textTheme.bodyText2?.copyWith(
                             color: Colors.white,
                           ),
                     ),
+                    const SizedBox(height: 50),
                   ],
                 ),
-                size: 100,
               ),
               MultiViewStep(
                 content: Column(
@@ -73,6 +77,7 @@ class _VerticalSinglePageStepperState extends State<VerticalSinglePageStepper> {
                             color: Colors.white,
                           ),
                     ),
+                    const SizedBox(height: 50),
                   ],
                 ),
               ),
@@ -138,6 +143,7 @@ class _VerticalSinglePageStepperState extends State<VerticalSinglePageStepper> {
               ),
               MultiViewStep(
                 content: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
                       'Maatregel',
