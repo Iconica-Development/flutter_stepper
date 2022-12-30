@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import 'package:flutter/material.dart';
+import 'package:flutter_stepper/src/models/step_indicator_theme.dart';
 
 class StepperTheme {
   /// The theme for the [MultiStepperView].
@@ -12,8 +13,7 @@ class StepperTheme {
     this.lineDashLength = 5,
     this.lineDashGapLength = 3,
     this.lineColor = Colors.black,
-    this.stepIndicatorTextStyleActive,
-    this.stepIndicatorTextStyleInactive,
+    this.stepIndicatorTheme = const StepIndicatorTheme(),
     this.stepIndicatorSize = 30,
     this.iconDone = Icons.check,
     this.iconSize = 20,
@@ -37,11 +37,8 @@ class StepperTheme {
   /// The color of the line.
   final Color lineColor;
 
-  /// The style of the step indicator text while active
-  final TextStyle? stepIndicatorTextStyleActive;
-
-  /// The style of the step indicator text while inactive.
-  final TextStyle? stepIndicatorTextStyleInactive;
+  /// The style of the step indicator for the different states
+  final StepIndicatorTheme stepIndicatorTheme;
 
   /// Height and width of the step indicator.
   final double stepIndicatorSize;

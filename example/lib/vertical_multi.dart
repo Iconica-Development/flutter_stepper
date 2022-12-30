@@ -34,10 +34,28 @@ class _VerticalMultiPageStepperState extends State<VerticalMultiPageStepper> {
         ),
         MultiStepperView(
           theme: StepperTheme(
-            stepIndicatorTextStyleActive:
-                Theme.of(context).textTheme.bodyText2?.copyWith(
-                      color: Colors.black,
-                    ),
+            stepIndicatorTheme: StepIndicatorTheme(
+              activeBackgroundColor: Colors.white,
+              activeTextStyle: Theme.of(context).textTheme.bodyText2?.copyWith(
+                    color: Colors.black,
+                  ),
+              activeBorder: Border.all(
+                color: Colors.white,
+              ),
+              inactiveBackgroundColor: Colors.black,
+              inactiveTextStyle:
+                  Theme.of(context).textTheme.bodyText2?.copyWith(
+                        color: Colors.white,
+                      ),
+              inactiveBorder: Border.all(
+                color: Colors.white,
+              ),
+              completedBackgroundColor: Colors.green,
+              completedTextStyle:
+                  Theme.of(context).textTheme.bodyText2?.copyWith(
+                        color: Colors.white,
+                      ),
+            ),
             lineColor: Colors.white,
           ),
           showAllSteps: false,

@@ -60,6 +60,7 @@ class MultiStepperView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var indicatorTheme = theme.stepIndicatorTheme;
     if (!showAllSteps) {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,7 +79,7 @@ class MultiStepperView extends StatelessWidget {
                   child: Center(
                     child: Text(
                       (currentStep + (zeroIndexed ? 0 : 1)).toString(),
-                      style: theme.stepIndicatorTextStyleActive ??
+                      style: indicatorTheme.activeTextStyle ??
                           Theme.of(context).textTheme.bodyText2,
                     ),
                   ),
@@ -129,44 +130,53 @@ class MultiStepperView extends StatelessWidget {
                                       height: theme.stepIndicatorSize,
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
-                                        border: Border.all(
-                                          color: theme
-                                                  .stepIndicatorTextStyleInactive
-                                                  ?.color ??
-                                              Colors.black,
-                                        ),
-                                        color: currentStep == i
-                                            ? theme
-                                                .stepIndicatorTextStyleInactive
-                                                ?.color
+                                        border: currentStep == i
+                                            ? indicatorTheme.activeBorder
                                             : currentStep >=
                                                     (i + (zeroIndexed ? 0 : 1))
-                                                ? theme
-                                                    .stepIndicatorTextStyleInactive
-                                                    ?.color
-                                                : theme
-                                                    .stepIndicatorTextStyleActive
-                                                    ?.color,
+                                                ? indicatorTheme.completedBorder
+                                                : indicatorTheme
+                                                        .inactiveBorder ??
+                                                    Border.all(
+                                                      color: Theme.of(context)
+                                                          .primaryColor,
+                                                    ),
+                                        color: currentStep == i
+                                            ? indicatorTheme
+                                                .activeBackgroundColor
+                                            : currentStep >=
+                                                    (i + (zeroIndexed ? 0 : 1))
+                                                ? indicatorTheme
+                                                    .completedBackgroundColor
+                                                : indicatorTheme
+                                                        .inactiveBackgroundColor ??
+                                                    Theme.of(context)
+                                                        .primaryColor,
                                       ),
                                       child: Center(
                                         child: currentStep >=
-                                                (i + (zeroIndexed ? 0 : 1))
+                                                _getIndexNumber(
+                                                  index: i,
+                                                  zeroIndexed: zeroIndexed,
+                                                )
                                             ? Icon(
                                                 theme.iconDone,
                                                 size: theme.iconSize,
                                                 color: currentStep == i
-                                                    ? theme
-                                                        .stepIndicatorTextStyleActive
+                                                    ? indicatorTheme
+                                                        .completedTextStyle
                                                         ?.color
                                                     : currentStep >=
-                                                            (i +
-                                                                (zeroIndexed
-                                                                    ? 0
-                                                                    : 1))
-                                                        ? theme
-                                                            .stepIndicatorTextStyleActive
+                                                            _getIndexNumber(
+                                                              index: i,
+                                                              zeroIndexed:
+                                                                  zeroIndexed,
+                                                            )
+                                                        ? indicatorTheme
+                                                            .completedTextStyle
                                                             ?.color
-                                                        : theme.stepIndicatorTextStyleInactive
+                                                        : indicatorTheme
+                                                                .inactiveTextStyle
                                                                 ?.color ??
                                                             Theme.of(context)
                                                                 .textTheme
@@ -174,12 +184,15 @@ class MultiStepperView extends StatelessWidget {
                                                                 ?.color,
                                               )
                                             : Text(
-                                                (i + (zeroIndexed ? 0 : 1))
-                                                    .toString(),
+                                                _getIndexNumber(
+                                                  index: i,
+                                                  zeroIndexed: zeroIndexed,
+                                                ).toString(),
                                                 style: currentStep == i
-                                                    ? theme
-                                                        .stepIndicatorTextStyleActive
-                                                    : theme.stepIndicatorTextStyleInactive ??
+                                                    ? indicatorTheme
+                                                        .activeTextStyle
+                                                    : indicatorTheme
+                                                            .inactiveTextStyle ??
                                                         Theme.of(context)
                                                             .textTheme
                                                             .bodyText2,
@@ -262,5 +275,12 @@ class MultiStepperView extends StatelessWidget {
         ],
       );
     }
+  }
+
+  int _getIndexNumber({
+    required int index,
+    required bool zeroIndexed,
+  }) {
+    return index + (zeroIndexed ? 0 : 1);
   }
 }
