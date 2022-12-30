@@ -24,14 +24,30 @@ class _VerticalSinglePageStepperState extends State<VerticalSinglePageStepper> {
           scrollDirection: Axis.vertical,
           child: MultiStepperView(
             theme: StepperTheme(
-              stepIndicatorTextStyleActive:
-                  Theme.of(context).textTheme.bodyText2?.copyWith(
-                        color: Colors.black,
-                      ),
-              stepIndicatorTextStyleInactive:
-                  Theme.of(context).textTheme.bodyText2?.copyWith(
-                        color: Colors.white,
-                      ),
+              stepIndicatorActiveTheme: StepIndicatorActiveTheme(
+                backgroundColor: Colors.white,
+                textStyle: Theme.of(context).textTheme.bodyText2?.copyWith(
+                      color: Colors.black,
+                    ),
+                border: Border.all(
+                  color: Colors.white,
+                ),
+              ),
+              stepIndicatorInactiveTheme: StepIndicatorInactiveTheme(
+                backgroundColor: Colors.black,
+                textStyle: Theme.of(context).textTheme.bodyText2?.copyWith(
+                      color: Colors.white,
+                    ),
+                border: Border.all(
+                  color: Colors.white,
+                ),
+              ),
+              stepIndicatorDoneTheme: StepIndicatorDoneTheme(
+                backgroundColor: Colors.green,
+                textStyle: Theme.of(context).textTheme.bodyText2?.copyWith(
+                      color: Colors.white,
+                    ),
+              ),
               lineColor: Colors.white,
             ),
             showAllSteps: true,
