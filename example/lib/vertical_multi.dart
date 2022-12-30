@@ -34,30 +34,28 @@ class _VerticalMultiPageStepperState extends State<VerticalMultiPageStepper> {
         ),
         MultiStepperView(
           theme: StepperTheme(
-            stepIndicatorActiveTheme: StepIndicatorActiveTheme(
-                backgroundColor: Colors.white,
-                textStyle: Theme.of(context).textTheme.bodyText2?.copyWith(
-                      color: Colors.black,
-                    ),
-                border: Border.all(
-                  color: Colors.white,
-                ),
+            stepIndicatorTheme: StepIndicatorTheme(
+              activeBackgroundColor: Colors.white,
+              activeTextStyle: Theme.of(context).textTheme.bodyText2?.copyWith(
+                    color: Colors.black,
+                  ),
+              activeBorder: Border.all(
+                color: Colors.white,
               ),
-              stepIndicatorInactiveTheme: StepIndicatorInactiveTheme(
-                backgroundColor: Colors.black,
-                textStyle: Theme.of(context).textTheme.bodyText2?.copyWith(
-                      color: Colors.white,
-                    ),
-                border: Border.all(
-                  color: Colors.white,
-                ),
+              inactiveBackgroundColor: Colors.black,
+              inactiveTextStyle:
+                  Theme.of(context).textTheme.bodyText2?.copyWith(
+                        color: Colors.white,
+                      ),
+              inactiveBorder: Border.all(
+                color: Colors.white,
               ),
-              stepIndicatorDoneTheme: StepIndicatorDoneTheme(
-                backgroundColor: Colors.green,
-                textStyle: Theme.of(context).textTheme.bodyText2?.copyWith(
-                      color: Colors.white,
-                    ),
-              ),
+              completedBackgroundColor: Colors.green,
+              completedTextStyle:
+                  Theme.of(context).textTheme.bodyText2?.copyWith(
+                        color: Colors.white,
+                      ),
+            ),
             lineColor: Colors.white,
           ),
           showAllSteps: false,

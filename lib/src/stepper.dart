@@ -60,9 +60,7 @@ class MultiStepperView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var indicatorActiveTheme = theme.stepIndicatorActiveTheme;
-    var indicatorInactiveTheme = theme.stepIndicatorInactiveTheme;
-    var indicatorDoneTheme = theme.stepIndicatorDoneTheme;
+    var indicatorTheme = theme.stepIndicatorTheme;
     if (!showAllSteps) {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,7 +79,7 @@ class MultiStepperView extends StatelessWidget {
                   child: Center(
                     child: Text(
                       (currentStep + (zeroIndexed ? 0 : 1)).toString(),
-                      style: indicatorActiveTheme.textStyle ??
+                      style: indicatorTheme.activeTextStyle ??
                           Theme.of(context).textTheme.bodyText2,
                     ),
                   ),
@@ -133,25 +131,25 @@ class MultiStepperView extends StatelessWidget {
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                         border: currentStep == i
-                                            ? indicatorActiveTheme.border
+                                            ? indicatorTheme.activeBorder
                                             : currentStep >=
                                                     (i + (zeroIndexed ? 0 : 1))
-                                                ? indicatorDoneTheme.border
-                                                : indicatorInactiveTheme
-                                                        .border ??
+                                                ? indicatorTheme.completedBorder
+                                                : indicatorTheme
+                                                        .inactiveBorder ??
                                                     Border.all(
                                                       color: Theme.of(context)
                                                           .primaryColor,
                                                     ),
                                         color: currentStep == i
-                                            ? indicatorActiveTheme
-                                                .backgroundColor
+                                            ? indicatorTheme
+                                                .activeBackgroundColor
                                             : currentStep >=
                                                     (i + (zeroIndexed ? 0 : 1))
-                                                ? indicatorDoneTheme
-                                                    .backgroundColor
-                                                : indicatorInactiveTheme
-                                                        .backgroundColor ??
+                                                ? indicatorTheme
+                                                    .completedBackgroundColor
+                                                : indicatorTheme
+                                                        .inactiveBackgroundColor ??
                                                     Theme.of(context)
                                                         .primaryColor,
                                       ),
@@ -165,9 +163,8 @@ class MultiStepperView extends StatelessWidget {
                                                 theme.iconDone,
                                                 size: theme.iconSize,
                                                 color: currentStep == i
-                                                    ? theme
-                                                        .stepIndicatorDoneTheme
-                                                        .textStyle
+                                                    ? indicatorTheme
+                                                        .completedTextStyle
                                                         ?.color
                                                     : currentStep >=
                                                             _getIndexNumber(
@@ -175,10 +172,11 @@ class MultiStepperView extends StatelessWidget {
                                                               zeroIndexed:
                                                                   zeroIndexed,
                                                             )
-                                                        ? indicatorDoneTheme
-                                                            .textStyle?.color
-                                                        : indicatorInactiveTheme
-                                                                .textStyle
+                                                        ? indicatorTheme
+                                                            .completedTextStyle
+                                                            ?.color
+                                                        : indicatorTheme
+                                                                .inactiveTextStyle
                                                                 ?.color ??
                                                             Theme.of(context)
                                                                 .textTheme
@@ -191,10 +189,10 @@ class MultiStepperView extends StatelessWidget {
                                                   zeroIndexed: zeroIndexed,
                                                 ).toString(),
                                                 style: currentStep == i
-                                                    ? indicatorActiveTheme
-                                                        .textStyle
-                                                    : indicatorInactiveTheme
-                                                            .textStyle ??
+                                                    ? indicatorTheme
+                                                        .activeTextStyle
+                                                    : indicatorTheme
+                                                            .inactiveTextStyle ??
                                                         Theme.of(context)
                                                             .textTheme
                                                             .bodyText2,
