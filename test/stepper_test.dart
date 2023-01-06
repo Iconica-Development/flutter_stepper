@@ -3,8 +3,8 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_stepper/stepper.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   testWidgets('MultiStepperView has a step indicator', (tester) async {
@@ -13,6 +13,7 @@ void main() {
       const MaterialApp(
         home: Scaffold(
           body: MultiStepperView(
+            currentStep: 0,
             showAllSteps: true,
             steps: [
               MultiViewStep(

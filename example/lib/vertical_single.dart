@@ -14,7 +14,7 @@ class VerticalSinglePageStepper extends StatefulWidget {
 }
 
 class _VerticalSinglePageStepperState extends State<VerticalSinglePageStepper> {
-  int _currentStep = 1;
+  int _currentStep = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +23,7 @@ class _VerticalSinglePageStepperState extends State<VerticalSinglePageStepper> {
         SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: MultiStepperView(
+            showOnlyCurrentStep: true,
             theme: StepperTheme(
               stepIndicatorTheme: StepIndicatorTheme(
                 activeBackgroundColor: Colors.white,
