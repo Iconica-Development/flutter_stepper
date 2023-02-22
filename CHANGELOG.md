@@ -1,4 +1,9 @@
+## [2.1.0] - 22 February 2023
+
+- Added stepper indicator builder to the stepperIndicatorTheme
+
 ## [2.0.0] - 5 Januari 2023
+
 - Update stepper to allow for growable content in rows
 - Refactor structure of app for better maintenance
 - Rename showAllStepExpandedOne to showOnlyCurrentStep
