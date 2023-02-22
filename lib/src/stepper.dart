@@ -183,7 +183,7 @@ class _MultiPageStepper extends StatelessWidget {
                   child: Text(
                     displayIndex,
                     style: stepperTheme.stepIndicatorTheme.activeTextStyle ??
-                        theme.textTheme.bodyText2,
+                        theme.textTheme.bodyMedium,
                   ),
                 ),
               ),
@@ -326,7 +326,7 @@ class _StepIndicator extends StatelessWidget {
 
     BoxBorder border = Border.all(color: theme.primaryColor);
     var color = theme.primaryColor;
-    var textStyle = theme.textTheme.bodyText2;
+    var textStyle = theme.textTheme.bodyMedium;
     if (currentIndex == step) {
       border = indicatorTheme.activeBorder ?? border;
       color = indicatorTheme.activeBackgroundColor ?? color;

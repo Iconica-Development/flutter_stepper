@@ -36,7 +36,7 @@ class _VerticalMultiPageStepperState extends State<VerticalMultiPageStepper> {
           theme: StepperTheme(
             stepIndicatorTheme: StepIndicatorTheme(
               activeBackgroundColor: Colors.white,
-              activeTextStyle: Theme.of(context).textTheme.bodyText2?.copyWith(
+              activeTextStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: Colors.black,
                   ),
               activeBorder: Border.all(
@@ -44,7 +44,7 @@ class _VerticalMultiPageStepperState extends State<VerticalMultiPageStepper> {
               ),
               inactiveBackgroundColor: Colors.black,
               inactiveTextStyle:
-                  Theme.of(context).textTheme.bodyText2?.copyWith(
+                  Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: Colors.white,
                       ),
               inactiveBorder: Border.all(
@@ -52,7 +52,7 @@ class _VerticalMultiPageStepperState extends State<VerticalMultiPageStepper> {
               ),
               completedBackgroundColor: Colors.green,
               completedTextStyle:
-                  Theme.of(context).textTheme.bodyText2?.copyWith(
+                  Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: Colors.white,
                       ),
             ),

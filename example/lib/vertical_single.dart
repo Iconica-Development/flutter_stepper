@@ -28,7 +28,7 @@ class _VerticalSinglePageStepperState extends State<VerticalSinglePageStepper> {
               stepIndicatorTheme: StepIndicatorTheme(
                 activeBackgroundColor: Colors.white,
                 activeTextStyle:
-                    Theme.of(context).textTheme.bodyText2?.copyWith(
+                    Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: Colors.black,
                         ),
                 activeBorder: Border.all(
@@ -36,7 +36,7 @@ class _VerticalSinglePageStepperState extends State<VerticalSinglePageStepper> {
                 ),
                 inactiveBackgroundColor: Colors.black,
                 inactiveTextStyle:
-                    Theme.of(context).textTheme.bodyText2?.copyWith(
+                    Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: Colors.white,
                         ),
                 inactiveBorder: Border.all(
@@ -44,7 +44,7 @@ class _VerticalSinglePageStepperState extends State<VerticalSinglePageStepper> {
                 ),
                 completedBackgroundColor: Colors.green,
                 completedTextStyle:
-                    Theme.of(context).textTheme.bodyText2?.copyWith(
+                    Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: Colors.white,
                         ),
               ),
@@ -63,13 +63,13 @@ class _VerticalSinglePageStepperState extends State<VerticalSinglePageStepper> {
                   children: [
                     Text(
                       'Datum',
-                      style: Theme.of(context).textTheme.headline6?.copyWith(
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
                             color: Colors.white,
                           ),
                     ),
                     Text(
                       'Selecteer een datum',
-                      style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             color: Colors.white,
                           ),
                     ),
@@ -83,13 +83,13 @@ class _VerticalSinglePageStepperState extends State<VerticalSinglePageStepper> {
                   children: [
                     Text(
                       'Tijd',
-                      style: Theme.of(context).textTheme.headline6?.copyWith(
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
                             color: Colors.white,
                           ),
                     ),
                     Text(
                       'Selecteer een tijd',
-                      style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             color: Colors.white,
                           ),
                     ),
