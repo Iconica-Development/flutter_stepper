@@ -172,21 +172,23 @@ class _MultiPageStepper extends StatelessWidget {
           padding: linePadding,
           child: Column(
             children: [
-              Container(
-                width: stepperTheme.stepIndicatorSize,
-                height: stepperTheme.stepIndicatorSize,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: stepperTheme.lineColor,
-                ),
-                child: Center(
-                  child: Text(
-                    displayIndex,
-                    style: stepperTheme.stepIndicatorTheme.activeTextStyle ??
-                        theme.textTheme.bodyText2,
+              stepperTheme.stepIndicatorTheme.builder?.call(index, null) ??
+                  Container(
+                    width: stepperTheme.stepIndicatorSize,
+                    height: stepperTheme.stepIndicatorSize,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: stepperTheme.lineColor,
+                    ),
+                    child: Center(
+                      child: Text(
+                        displayIndex,
+                        style:
+                            stepperTheme.stepIndicatorTheme.activeTextStyle ??
+                                theme.textTheme.bodyMedium,
+                      ),
+                    ),
                   ),
-                ),
-              ),
               Padding(
                 padding: EdgeInsets.only(top: stepperTheme.linePadding),
                 child: Container(
@@ -247,12 +249,14 @@ class _SinglePageStepper extends StatelessWidget {
                           children: [
                             GestureDetector(
                               onTap: () {},
-                              child: _StepIndicator(
-                                step: index,
-                                isZeroIndexed: isZeroIndexed,
-                                stepperTheme: stepperTheme,
-                                currentIndex: currentIndex,
-                              ),
+                              child: stepperTheme.stepIndicatorTheme.builder
+                                      ?.call(index, currentIndex) ??
+                                  _StepIndicator(
+                                    step: index,
+                                    isZeroIndexed: isZeroIndexed,
+                                    stepperTheme: stepperTheme,
+                                    currentIndex: currentIndex,
+                                  ),
                             ),
                             if (index < currentIndex) ...[
                               Expanded(
@@ -326,7 +330,7 @@ class _StepIndicator extends StatelessWidget {
 
     BoxBorder border = Border.all(color: theme.primaryColor);
     var color = theme.primaryColor;
-    var textStyle = theme.textTheme.bodyText2;
+    var textStyle = theme.textTheme.bodyMedium;
     if (currentIndex == step) {
       border = indicatorTheme.activeBorder ?? border;
       color = indicatorTheme.activeBackgroundColor ?? color;

@@ -6,9 +6,10 @@ import 'package:flutter/material.dart';
 
 class StepIndicatorTheme {
   const StepIndicatorTheme({
+    this.builder,
     this.completedBackgroundColor,
     this.completedBorder,
-    this.completedTextStyle, 
+    this.completedTextStyle,
     this.inactiveBackgroundColor,
     this.inactiveBorder,
     this.inactiveTextStyle,
@@ -16,6 +17,8 @@ class StepIndicatorTheme {
     this.activeBorder,
     this.activeTextStyle,
   });
+
+  final Widget Function(int stepIndex, int? currentIndex)? builder;
 
   final Color? activeBackgroundColor;
 
