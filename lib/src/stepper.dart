@@ -26,12 +26,11 @@ class MultiStepperView extends StatelessWidget {
     this.paddingRight = 20,
     this.pageHeight = 400,
     this.theme = const StepperTheme(),
-    Key? key,
-  })  : assert(
+    super.key,
+  }) : assert(
           !(showOnlyCurrentStep && !showAllSteps),
           'showOnlyCurrentStep only has effect if showAllSteps is true',
-        ),
-        super(key: key);
+        );
 
   /// The steps of the stepper.
   final List<MultiViewStep> steps;
@@ -107,8 +106,7 @@ class _StepContent extends StatelessWidget {
     required this.steps,
     required this.index,
     required this.showOnlyCurrentStep,
-    Key? key,
-  }) : super(key: key);
+  });
 
   final StepperTheme stepperTheme;
   final List<MultiViewStep> steps;
@@ -238,60 +236,58 @@ class _SinglePageStepper extends StatelessWidget {
           Column(
             children: List.generate(
               steps.length,
-              (index) {
-                return IntrinsicHeight(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Padding(
-                        padding: linePadding,
-                        child: Column(
-                          children: [
-                            GestureDetector(
-                              onTap: () {},
-                              child: stepperTheme.stepIndicatorTheme.builder
-                                      ?.call(index, currentIndex) ??
-                                  _StepIndicator(
-                                    step: index,
-                                    isZeroIndexed: isZeroIndexed,
-                                    stepperTheme: stepperTheme,
-                                    currentIndex: currentIndex,
-                                  ),
+              (index) => IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Padding(
+                      padding: linePadding,
+                      child: Column(
+                        children: [
+                          GestureDetector(
+                            onTap: () {},
+                            child: stepperTheme.stepIndicatorTheme.builder
+                                    ?.call(index, currentIndex) ??
+                                _StepIndicator(
+                                  step: index,
+                                  isZeroIndexed: isZeroIndexed,
+                                  stepperTheme: stepperTheme,
+                                  currentIndex: currentIndex,
+                                ),
+                          ),
+                          if (index < currentIndex) ...[
+                            Expanded(
+                              child: Container(
+                                width: stepperTheme.lineWidth,
+                                color: stepperTheme.lineColor,
+                              ),
                             ),
-                            if (index < currentIndex) ...[
-                              Expanded(
-                                child: Container(
-                                  width: stepperTheme.lineWidth,
-                                  color: stepperTheme.lineColor,
+                          ] else ...[
+                            Expanded(
+                              child: CustomPaint(
+                                painter: VerticalDashedLinePainter(
+                                  dashColor: stepperTheme.lineColor,
+                                  dashHeight: stepperTheme.lineDashLength,
+                                  dashSpace: stepperTheme.lineDashGapLength,
+                                  strokeWidth: stepperTheme.lineWidth,
                                 ),
                               ),
-                            ] else ...[
-                              Expanded(
-                                child: CustomPaint(
-                                  painter: VerticalDashedLinePainter(
-                                    dashColor: stepperTheme.lineColor,
-                                    dashHeight: stepperTheme.lineDashLength,
-                                    dashSpace: stepperTheme.lineDashGapLength,
-                                    strokeWidth: stepperTheme.lineWidth,
-                                  ),
-                                ),
-                              ),
-                            ]
+                            ),
                           ],
-                        ),
+                        ],
                       ),
-                      expandIndicators(
-                        _StepContent(
-                          stepperTheme: stepperTheme,
-                          showOnlyCurrentStep: showOnlyCurrentStep,
-                          steps: steps,
-                          index: index,
-                        ),
+                    ),
+                    expandIndicators(
+                      _StepContent(
+                        stepperTheme: stepperTheme,
+                        showOnlyCurrentStep: showOnlyCurrentStep,
+                        steps: steps,
+                        index: index,
                       ),
-                    ],
-                  ),
-                );
-              },
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
         ),

@@ -1,3 +1,7 @@
+## [2.1.1] - 7 February 2024
+
+- Added CI and linter
+
 ## [2.1.0] - 22 February 2023
 
 - Added stepper indicator builder to the stepperIndicatorTheme
