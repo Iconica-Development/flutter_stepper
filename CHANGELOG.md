@@ -1,3 +1,9 @@
+## [2.2.0] - 4 March 2024
+
+- Added optional `lineHeight` to the `StepperTheme` to allow for custom line height.
+- Added bool useIndicator to the `stepperTheme' so it uses that same indicator after the step is done.
+- Added optional `indicator' for a step.
+
 ## [2.1.1] - 7 February 2024
 
 - Added CI and linter

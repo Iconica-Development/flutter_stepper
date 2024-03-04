@@ -253,11 +253,13 @@ class _SinglePageStepper extends StatelessWidget {
                                   isZeroIndexed: isZeroIndexed,
                                   stepperTheme: stepperTheme,
                                   currentIndex: currentIndex,
+                                  indicator: steps[index].indicator,
                                 ),
                           ),
                           if (index < currentIndex) ...[
                             Expanded(
                               child: Container(
+                                height: stepperTheme.lineHeight,
                                 width: stepperTheme.lineWidth,
                                 color: stepperTheme.lineColor,
                               ),
@@ -312,12 +314,14 @@ class _StepIndicator extends StatelessWidget {
     required this.currentIndex,
     required this.stepperTheme,
     required this.isZeroIndexed,
+    this.indicator,
   });
 
   final int step;
   final int currentIndex;
   final StepperTheme stepperTheme;
   final bool isZeroIndexed;
+  final Widget? indicator;
 
   @override
   Widget build(BuildContext context) {
@@ -341,17 +345,22 @@ class _StepIndicator extends StatelessWidget {
       textStyle = indicatorTheme.inactiveTextStyle ?? textStyle;
     }
 
-    Widget indicator = Text(
-      isZeroIndexed ? '$step' : '${step + 1}',
-      style: textStyle,
-    );
+    var indicator = this.indicator ??
+        Text(
+          isZeroIndexed ? '$step' : '${step + 1}',
+          style: textStyle,
+        );
 
     if (currentIndex > step) {
-      indicator = Icon(
-        stepperTheme.iconDone,
-        size: stepperTheme.iconSize,
-        color: textStyle?.color,
-      );
+      if (this.indicator != null && stepperTheme.useIndicator) {
+        indicator = this.indicator!;
+      } else {
+        indicator = Icon(
+          stepperTheme.iconDone,
+          size: stepperTheme.iconSize,
+          color: textStyle?.color,
+        );
+      }
     }
 
     return Container(

@@ -12,6 +12,7 @@ class MultiViewStep {
     this.title = '',
     this.size,
     this.hidden = false,
+    this.indicator,
   });
 
   // The Title of the step
@@ -25,4 +26,6 @@ class MultiViewStep {
   final double? size;
 
   final bool hidden;
+
+  final Widget? indicator;
 }
