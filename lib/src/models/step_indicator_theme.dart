@@ -18,23 +18,34 @@ class StepIndicatorTheme {
     this.activeTextStyle,
   });
 
+  /// A function that defines custom widget builders based on the step index
+  /// and current index.
   final Widget Function(int stepIndex, int? currentIndex)? builder;
 
+  /// The background color for active steps.
   final Color? activeBackgroundColor;
 
+  /// The border for active steps.
   final BoxBorder? activeBorder;
 
+  /// The text style for active steps.
   final TextStyle? activeTextStyle;
 
+  /// The background color for inactive steps.
   final Color? inactiveBackgroundColor;
 
+  /// The border for inactive steps.
   final BoxBorder? inactiveBorder;
 
+  /// The text style for inactive steps.
   final TextStyle? inactiveTextStyle;
 
+  /// The background color for completed steps.
   final Color? completedBackgroundColor;
 
+  /// The border for completed steps.
   final BoxBorder? completedBorder;
 
+  /// The text style for completed steps.
   final TextStyle? completedTextStyle;
 }
