@@ -20,6 +20,8 @@ class StepperTheme {
     this.emptyHeight = 100,
     this.emptyWidth = 100,
     this.paddingTopForCenterContent = 10,
+    this.useIndicator = false,
+    this.lineHeight = 0,
   });
 
   /// The padding between the start of the line and the stepper indicator.
@@ -57,4 +59,11 @@ class StepperTheme {
 
   /// Padding when single step is shown at the top
   final double paddingTopForCenterContent;
+
+  /// Use the indicator widget instead of the default one
+  /// when the step is done
+  final bool useIndicator;
+
+  /// The height of the line between the steps when all steps are shown
+  final double? lineHeight;
 }
