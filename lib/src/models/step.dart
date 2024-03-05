@@ -27,5 +27,6 @@ class MultiViewStep {
 
   final bool hidden;
 
+  /// The indicator for the step
   final Widget? indicator;
 }
