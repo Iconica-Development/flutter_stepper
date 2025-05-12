@@ -78,26 +78,25 @@ void main() {
     await tester.pumpWidget(
       const MaterialApp(
         home: MultiStepperView(
+          theme: StepperTheme(useDashedLine: true),
           showAllSteps: true,
           currentStep: 0,
+          showOnlyCurrentStep: true,
           steps: [
             MultiViewStep(
               content: Text(
                 'First page',
               ),
-              size: 150,
             ),
             MultiViewStep(
               content: Text(
                 'Second page',
               ),
-              size: 150,
             ),
             MultiViewStep(
               content: Text(
-                'Third page',
+                'Second page',
               ),
-              size: 150,
             ),
           ],
         ),

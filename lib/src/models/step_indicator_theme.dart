@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 class StepIndicatorTheme {
   const StepIndicatorTheme({
     this.builder,
+    this.lastBuilder,
     this.completedBackgroundColor,
     this.completedBorder,
     this.completedTextStyle,
@@ -21,6 +22,10 @@ class StepIndicatorTheme {
   /// A function that defines custom widget builders based on the step index
   /// and current index.
   final Widget Function(int stepIndex, int? currentIndex)? builder;
+
+  /// A function that defines custom widget builders based on the step index
+  /// and current index for the last step.
+  final Widget Function(int stepIndex, int? currentIndex)? lastBuilder;
 
   /// The background color for active steps.
   final Color? activeBackgroundColor;
