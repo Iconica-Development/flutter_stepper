@@ -1,3 +1,10 @@
+## [2.3.0]
+
+- Added lastBuilder to the StepIndicatorTheme to allow for custom last step indicator.
+- Added useDashedLine to always use a dashed line for the stepper.
+- Added activeLineColor to the StepIndicatorTheme to allow for custom active line color.
+- Added hideStepWhenDone to the StepIndicatorTheme to scroll the stepper when the step is done.
+
 ## [2.2.0] - 4 March 2024
 
 - Added optional `lineHeight` to the `StepperTheme` to allow for custom line height.

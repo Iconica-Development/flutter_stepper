@@ -22,6 +22,9 @@ class StepperTheme {
     this.paddingTopForCenterContent = 10,
     this.useIndicator = false,
     this.lineHeight = 0,
+    this.useDashedLine = false,
+    this.activeLineColor,
+    this.hideStepWhenDone = false,
   });
 
   /// The padding between the start of the line and the stepper indicator.
@@ -66,4 +69,13 @@ class StepperTheme {
 
   /// The height of the line between the steps when all steps are shown
   final double? lineHeight;
+
+  /// Always use a dashedline
+  final bool useDashedLine;
+
+  /// The color of the line coming from the current step
+  final Color? activeLineColor;
+
+  /// scroll the completed steps up
+  final bool hideStepWhenDone;
 }
