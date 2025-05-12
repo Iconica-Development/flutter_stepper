@@ -106,27 +106,34 @@ class _StepContent extends StatelessWidget {
     required this.steps,
     required this.index,
     required this.showOnlyCurrentStep,
+    required this.lineHeight,
+    required this.currentStep,
   });
 
   final StepperTheme stepperTheme;
   final List<MultiViewStep> steps;
   final bool showOnlyCurrentStep;
   final int index;
+  final double lineHeight;
+  final int currentStep;
 
   @override
   Widget build(BuildContext context) {
     var step = steps[index];
+    if (currentStep - 1 > index && stepperTheme.hideStepWhenDone) {
+      return SizedBox(height: stepperTheme.linePadding);
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: stepperTheme.linePadding),
         if (showOnlyCurrentStep) ...[
           SizedBox(
-            height: index == steps.length - 1 ? 0 : stepperTheme.emptyHeight,
+            height: index == steps.length - 1 ? 0 : lineHeight,
           ),
         ] else if (step.hidden) ...[
           SizedBox(
-            height: index == steps.length - 1 ? 0 : stepperTheme.emptyHeight,
+            height: index == steps.length - 1 ? 0 : lineHeight,
             width: stepperTheme.emptyWidth,
           ),
         ] else if (step.size != null) ...[
@@ -228,7 +235,24 @@ class _SinglePageStepper extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget expandIndicators(Widget child) =>
         !showOnlyCurrentStep ? Expanded(child: child) : child;
+    Widget dashedLine(Color lineColor) => Expanded(
+          child: CustomPaint(
+            painter: VerticalDashedLinePainter(
+              dashColor: lineColor,
+              dashHeight: stepperTheme.lineDashLength,
+              dashSpace: stepperTheme.lineDashGapLength,
+              strokeWidth: stepperTheme.lineWidth,
+            ),
+          ),
+        );
 
+    Widget solidLine(Color lineColor) => Expanded(
+          child: Container(
+            height: stepperTheme.lineHeight,
+            width: stepperTheme.lineWidth,
+            color: lineColor,
+          ),
+        );
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -236,60 +260,84 @@ class _SinglePageStepper extends StatelessWidget {
           Column(
             children: List.generate(
               steps.length,
-              (index) => IntrinsicHeight(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Padding(
-                      padding: linePadding,
-                      child: Column(
-                        children: [
-                          GestureDetector(
-                            onTap: () {},
-                            child: stepperTheme.stepIndicatorTheme.builder
-                                    ?.call(index, currentIndex) ??
-                                _StepIndicator(
-                                  step: index,
-                                  isZeroIndexed: isZeroIndexed,
-                                  stepperTheme: stepperTheme,
-                                  currentIndex: currentIndex,
-                                  indicator: steps[index].indicator,
-                                ),
-                          ),
-                          if (index < currentIndex) ...[
-                            Expanded(
-                              child: Container(
-                                height: stepperTheme.lineHeight,
-                                width: stepperTheme.lineWidth,
-                                color: stepperTheme.lineColor,
-                              ),
-                            ),
-                          ] else ...[
-                            Expanded(
-                              child: CustomPaint(
-                                painter: VerticalDashedLinePainter(
-                                  dashColor: stepperTheme.lineColor,
-                                  dashHeight: stepperTheme.lineDashLength,
-                                  dashSpace: stepperTheme.lineDashGapLength,
-                                  strokeWidth: stepperTheme.lineWidth,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ],
-                      ),
-                    ),
-                    expandIndicators(
-                      _StepContent(
+              (index) {
+                var lineColor = stepperTheme.activeLineColor != null
+                    ? currentIndex == index
+                        ? stepperTheme.activeLineColor!
+                        : stepperTheme.lineColor
+                    : stepperTheme.lineColor;
+                Widget stepIndicator;
+                stepIndicator = stepperTheme.stepIndicatorTheme.builder
+                        ?.call(index, currentIndex) ??
+                    _StepIndicator(
+                      step: index,
+                      isZeroIndexed: isZeroIndexed,
+                      stepperTheme: stepperTheme,
+                      currentIndex: currentIndex,
+                      indicator: steps[index].indicator,
+                    );
+                if (currentIndex > index && stepperTheme.hideStepWhenDone) {
+                  stepIndicator = const SizedBox.shrink();
+                }
+
+                if (steps.length - 1 == index) {
+                  stepIndicator = stepperTheme.stepIndicatorTheme.lastBuilder
+                          ?.call(index, currentIndex) ??
+                      _StepIndicator(
+                        step: index,
+                        isZeroIndexed: isZeroIndexed,
                         stepperTheme: stepperTheme,
-                        showOnlyCurrentStep: showOnlyCurrentStep,
-                        steps: steps,
-                        index: index,
+                        currentIndex: currentIndex,
+                        indicator: steps[index].indicator,
+                      );
+                }
+                Widget line;
+
+                if (currentIndex < index) {
+                  line = stepperTheme.useDashedLine
+                      ? dashedLine(lineColor)
+                      : solidLine(lineColor);
+                } else {
+                  line = dashedLine(lineColor);
+                }
+
+                if (currentIndex - 1 > index && stepperTheme.hideStepWhenDone) {
+                  line = const SizedBox.shrink();
+                }
+
+                return IntrinsicHeight(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Padding(
+                        padding: linePadding,
+                        child: Column(
+                          children: [
+                            GestureDetector(
+                              onTap: () {},
+                              child: stepIndicator,
+                            ),
+                            line,
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
+                      expandIndicators(
+                        _StepContent(
+                          stepperTheme: stepperTheme,
+                          showOnlyCurrentStep: showOnlyCurrentStep,
+                          steps: steps,
+                          index: index,
+                          currentStep: currentIndex,
+                          lineHeight: currentIndex > index &&
+                                  stepperTheme.hideStepWhenDone
+                              ? 40
+                              : stepperTheme.emptyHeight,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
             ),
           ),
         ),
@@ -344,7 +392,6 @@ class _StepIndicator extends StatelessWidget {
       color = indicatorTheme.inactiveBackgroundColor ?? color;
       textStyle = indicatorTheme.inactiveTextStyle ?? textStyle;
     }
-
     var indicator = this.indicator ??
         Text(
           isZeroIndexed ? '$step' : '${step + 1}',
