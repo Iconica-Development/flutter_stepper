@@ -234,7 +234,58 @@ class _SinglePageStepper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget expandIndicators(Widget child) =>
-        !showOnlyCurrentStep ? Expanded(child: child) : child;
+        showOnlyCurrentStep ? child : Expanded(child: child);
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        expandIndicators(
+          _StepperLine(
+            steps: steps,
+            stepperTheme: stepperTheme,
+            currentIndex: currentIndex,
+            isZeroIndexed: isZeroIndexed,
+            linePadding: linePadding,
+            showOnlyCurrentStep: showOnlyCurrentStep,
+          ),
+        ),
+        if (showOnlyCurrentStep && !steps[currentIndex].hidden) ...[
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: stepperTheme.paddingTopForCenterContent,
+              ),
+              child: steps[currentIndex].content,
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+class _StepperLine extends StatelessWidget {
+  const _StepperLine({
+    required this.steps,
+    required this.stepperTheme,
+    required this.currentIndex,
+    required this.isZeroIndexed,
+    required this.linePadding,
+    required this.showOnlyCurrentStep,
+  });
+
+  final List<MultiViewStep> steps;
+  final StepperTheme stepperTheme;
+  final int currentIndex;
+  final bool isZeroIndexed;
+  final EdgeInsets linePadding;
+  final bool showOnlyCurrentStep;
+
+  @override
+  Widget build(BuildContext context) {
+    Widget expandIndicators(Widget child) =>
+        showOnlyCurrentStep ? child : Expanded(child: child);
+
     Widget dashedLine(Color lineColor) => Expanded(
           child: CustomPaint(
             painter: VerticalDashedLinePainter(
@@ -253,105 +304,89 @@ class _SinglePageStepper extends StatelessWidget {
             color: lineColor,
           ),
         );
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        expandIndicators(
-          Column(
-            children: List.generate(
-              steps.length,
-              (index) {
-                var lineColor = stepperTheme.activeLineColor != null
-                    ? currentIndex == index
-                        ? stepperTheme.activeLineColor!
-                        : stepperTheme.lineColor
-                    : stepperTheme.lineColor;
-                Widget stepIndicator;
-                stepIndicator = stepperTheme.stepIndicatorTheme.builder
-                        ?.call(index, currentIndex) ??
-                    _StepIndicator(
-                      step: index,
-                      isZeroIndexed: isZeroIndexed,
-                      stepperTheme: stepperTheme,
-                      currentIndex: currentIndex,
-                      indicator: steps[index].indicator,
-                    );
-                if (currentIndex > index && stepperTheme.hideStepWhenDone) {
-                  stepIndicator = const SizedBox.shrink();
-                }
 
-                if (steps.length - 1 == index) {
-                  stepIndicator = stepperTheme.stepIndicatorTheme.lastBuilder
-                          ?.call(index, currentIndex) ??
-                      _StepIndicator(
-                        step: index,
-                        isZeroIndexed: isZeroIndexed,
-                        stepperTheme: stepperTheme,
-                        currentIndex: currentIndex,
-                        indicator: steps[index].indicator,
-                      );
-                }
-                Widget line;
+    return Column(
+      children: List.generate(
+        steps.length,
+        (index) {
+          var lineColor = stepperTheme.activeLineColor != null
+              ? currentIndex == index
+                  ? stepperTheme.activeLineColor!
+                  : stepperTheme.lineColor
+              : stepperTheme.lineColor;
+          Widget stepIndicator;
+          stepIndicator = stepperTheme.stepIndicatorTheme.builder
+                  ?.call(index, currentIndex) ??
+              _StepIndicator(
+                step: index,
+                isZeroIndexed: isZeroIndexed,
+                stepperTheme: stepperTheme,
+                currentIndex: currentIndex,
+                indicator: steps[index].indicator,
+              );
+          if (currentIndex > index && stepperTheme.hideStepWhenDone) {
+            stepIndicator = const SizedBox.shrink();
+          }
 
-                if (currentIndex < index) {
-                  line = stepperTheme.useDashedLine
-                      ? dashedLine(lineColor)
-                      : solidLine(lineColor);
-                } else {
-                  line = dashedLine(lineColor);
-                }
+          if (steps.length - 1 == index) {
+            stepIndicator = stepperTheme.stepIndicatorTheme.lastBuilder
+                    ?.call(index, currentIndex) ??
+                _StepIndicator(
+                  step: index,
+                  isZeroIndexed: isZeroIndexed,
+                  stepperTheme: stepperTheme,
+                  currentIndex: currentIndex,
+                  indicator: steps[index].indicator,
+                );
+          }
+          Widget line;
 
-                if (currentIndex - 1 > index && stepperTheme.hideStepWhenDone) {
-                  line = const SizedBox.shrink();
-                }
+          if (currentIndex < index) {
+            line = stepperTheme.useDashedLine
+                ? dashedLine(lineColor)
+                : solidLine(lineColor);
+          } else {
+            line = dashedLine(lineColor);
+          }
 
-                return IntrinsicHeight(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+          if (currentIndex - 1 > index && stepperTheme.hideStepWhenDone) {
+            line = const SizedBox.shrink();
+          }
+
+          return IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Padding(
+                  padding: linePadding,
+                  child: Column(
                     children: [
-                      Padding(
-                        padding: linePadding,
-                        child: Column(
-                          children: [
-                            GestureDetector(
-                              onTap: () {},
-                              child: stepIndicator,
-                            ),
-                            line,
-                          ],
-                        ),
+                      GestureDetector(
+                        onTap: () {},
+                        child: stepIndicator,
                       ),
-                      expandIndicators(
-                        _StepContent(
-                          stepperTheme: stepperTheme,
-                          showOnlyCurrentStep: showOnlyCurrentStep,
-                          steps: steps,
-                          index: index,
-                          currentStep: currentIndex,
-                          lineHeight: currentIndex > index &&
-                                  stepperTheme.hideStepWhenDone
-                              ? 40
-                              : stepperTheme.emptyHeight,
-                        ),
-                      ),
+                      line,
                     ],
                   ),
-                );
-              },
+                ),
+                expandIndicators(
+                  _StepContent(
+                    stepperTheme: stepperTheme,
+                    showOnlyCurrentStep: showOnlyCurrentStep,
+                    steps: steps,
+                    index: index,
+                    currentStep: currentIndex,
+                    lineHeight:
+                        currentIndex > index && stepperTheme.hideStepWhenDone
+                            ? 40
+                            : stepperTheme.emptyHeight,
+                  ),
+                ),
+              ],
             ),
-          ),
-        ),
-        if (showOnlyCurrentStep && !steps[currentIndex].hidden) ...[
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(
-                top: stepperTheme.paddingTopForCenterContent,
-              ),
-              child: steps[currentIndex].content,
-            ),
-          ),
-        ],
-      ],
+          );
+        },
+      ),
     );
   }
 }
