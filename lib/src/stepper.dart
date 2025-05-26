@@ -334,6 +334,8 @@ class _StepperLine extends StatelessWidget {
           if (steps.length - 1 == index) {
             stepIndicator = stepperTheme.stepIndicatorTheme.lastBuilder
                     ?.call(index, currentIndex) ??
+                stepperTheme.stepIndicatorTheme.builder
+                    ?.call(index, currentIndex) ??
                 _StepIndicator(
                   step: index,
                   isZeroIndexed: isZeroIndexed,
@@ -344,12 +346,12 @@ class _StepperLine extends StatelessWidget {
           }
           Widget line;
 
-          if (currentIndex < index) {
-            line = stepperTheme.useDashedLine
-                ? dashedLine(lineColor)
-                : solidLine(lineColor);
-          } else {
+          if (stepperTheme.useDashedLine) {
             line = dashedLine(lineColor);
+          } else {
+            line = currentIndex > index
+                ? solidLine(lineColor)
+                : dashedLine(lineColor);
           }
 
           if (currentIndex - 1 > index && stepperTheme.hideStepWhenDone) {
