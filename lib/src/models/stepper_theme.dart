@@ -25,6 +25,7 @@ class StepperTheme {
     this.useDashedLine = false,
     this.activeLineColor,
     this.hideStepWhenDone = false,
+    this.stepAlignment = CrossAxisAlignment.center,
   });
 
   /// The padding between the start of the line and the stepper indicator.
@@ -78,4 +79,7 @@ class StepperTheme {
 
   /// scroll the completed steps up
   final bool hideStepWhenDone;
+
+  /// Alignment of steps in the column of steps
+  final CrossAxisAlignment stepAlignment;
 }
