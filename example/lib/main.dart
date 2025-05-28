@@ -49,7 +49,7 @@ class _StepperDemoState extends State<StepperDemo> {
                 ],
               ),
               if (_showAllSteps) ...[
-                const VerticalSinglePageStepper(),
+                const Expanded(child: VerticalSinglePageStepper()),
               ] else ...[
                 const VerticalMultiPageStepper(),
               ],

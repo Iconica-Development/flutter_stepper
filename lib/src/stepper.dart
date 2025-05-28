@@ -232,19 +232,15 @@ class _SinglePageStepper extends StatelessWidget {
   final int currentIndex;
 
   @override
-  Widget build(BuildContext context) {
-    Widget expandIndicators(Widget child) =>
-        showOnlyCurrentStep ? child : Expanded(child: child);
-
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ScrollConfiguration(
-          behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
-          child: SingleChildScrollView(
-            physics: const NeverScrollableScrollPhysics(),
-            child: expandIndicators(
-              _StepperLine(
+  Widget build(BuildContext context) => Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ScrollConfiguration(
+            behavior:
+                ScrollConfiguration.of(context).copyWith(scrollbars: false),
+            child: SingleChildScrollView(
+              physics: const NeverScrollableScrollPhysics(),
+              child: _StepperLine(
                 steps: steps,
                 stepperTheme: stepperTheme,
                 currentIndex: currentIndex,
@@ -254,20 +250,18 @@ class _SinglePageStepper extends StatelessWidget {
               ),
             ),
           ),
-        ),
-        if (showOnlyCurrentStep && !steps[currentIndex].hidden) ...[
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(
-                top: stepperTheme.paddingTopForCenterContent,
+          if (showOnlyCurrentStep && !steps[currentIndex].hidden) ...[
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(
+                  top: stepperTheme.paddingTopForCenterContent,
+                ),
+                child: steps[currentIndex].content,
               ),
-              child: steps[currentIndex].content,
             ),
-          ),
+          ],
         ],
-      ],
-    );
-  }
+      );
 }
 
 class _StepperLine extends StatelessWidget {
@@ -289,9 +283,6 @@ class _StepperLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget expandIndicators(Widget child) =>
-        showOnlyCurrentStep ? child : Expanded(child: child);
-
     Widget dashedLine(Color lineColor) => Expanded(
           child: CustomPaint(
             painter: VerticalDashedLinePainter(
@@ -312,6 +303,7 @@ class _StepperLine extends StatelessWidget {
         );
 
     return Column(
+      crossAxisAlignment: stepperTheme.stepAlignment,
       children: List.generate(
         steps.length,
         (index) {
@@ -377,18 +369,16 @@ class _StepperLine extends StatelessWidget {
                     ],
                   ),
                 ),
-                expandIndicators(
-                  _StepContent(
-                    stepperTheme: stepperTheme,
-                    showOnlyCurrentStep: showOnlyCurrentStep,
-                    steps: steps,
-                    index: index,
-                    currentStep: currentIndex,
-                    lineHeight:
-                        currentIndex > index && stepperTheme.hideStepWhenDone
-                            ? 40
-                            : stepperTheme.emptyHeight,
-                  ),
+                _StepContent(
+                  stepperTheme: stepperTheme,
+                  showOnlyCurrentStep: showOnlyCurrentStep,
+                  steps: steps,
+                  index: index,
+                  currentStep: currentIndex,
+                  lineHeight:
+                      currentIndex > index && stepperTheme.hideStepWhenDone
+                          ? 40
+                          : stepperTheme.emptyHeight,
                 ),
               ],
             ),
