@@ -239,16 +239,19 @@ class _SinglePageStepper extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SingleChildScrollView(
-          physics: const NeverScrollableScrollPhysics(),
-          child: expandIndicators(
-            _StepperLine(
-              steps: steps,
-              stepperTheme: stepperTheme,
-              currentIndex: currentIndex,
-              isZeroIndexed: isZeroIndexed,
-              linePadding: linePadding,
-              showOnlyCurrentStep: showOnlyCurrentStep,
+        ScrollConfiguration(
+          behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+          child: SingleChildScrollView(
+            physics: const NeverScrollableScrollPhysics(),
+            child: expandIndicators(
+              _StepperLine(
+                steps: steps,
+                stepperTheme: stepperTheme,
+                currentIndex: currentIndex,
+                isZeroIndexed: isZeroIndexed,
+                linePadding: linePadding,
+                showOnlyCurrentStep: showOnlyCurrentStep,
+              ),
             ),
           ),
         ),
