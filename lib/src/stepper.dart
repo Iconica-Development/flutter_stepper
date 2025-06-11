@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_stepper/src/line_painter.dart';
 import 'package:flutter_stepper/stepper.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 class MultiStepperView extends StatelessWidget {
   /// MultiStepperView is a widget that displays a vertical list of steps.
@@ -264,7 +265,7 @@ class _SinglePageStepper extends StatelessWidget {
       );
 }
 
-class _StepperLine extends StatelessWidget {
+class _StepperLine extends StatefulWidget {
   const _StepperLine({
     required this.steps,
     required this.stepperTheme,
@@ -282,74 +283,87 @@ class _StepperLine extends StatelessWidget {
   final bool showOnlyCurrentStep;
 
   @override
+  State<_StepperLine> createState() => _StepperLineState();
+}
+
+class _StepperLineState extends State<_StepperLine> {
+  late var indicatorKeys =
+      List.generate(widget.steps.length, (index) => Key('indicator_$index'));
+  late var lineKeys =
+      List.generate(widget.steps.length, (index) => Key('line_$index'));
+  late var isVisible = List.generate(widget.steps.length, (index) => true);
+
+  @override
   Widget build(BuildContext context) {
-    Widget dashedLine(Color lineColor) => Expanded(
+    Widget dashedLine(Color lineColor) => SizedBox(
+          height: widget.stepperTheme.lineHeight,
+          width: widget.stepperTheme.lineWidth,
           child: CustomPaint(
             painter: VerticalDashedLinePainter(
               dashColor: lineColor,
-              dashHeight: stepperTheme.lineDashLength,
-              dashSpace: stepperTheme.lineDashGapLength,
-              strokeWidth: stepperTheme.lineWidth,
+              dashHeight: widget.stepperTheme.lineDashLength,
+              dashSpace: widget.stepperTheme.lineDashGapLength,
+              strokeWidth: widget.stepperTheme.lineWidth,
             ),
           ),
         );
 
-    Widget solidLine(Color lineColor) => Expanded(
-          child: Container(
-            height: stepperTheme.lineHeight,
-            width: stepperTheme.lineWidth,
-            color: lineColor,
-          ),
+    Widget solidLine(Color lineColor) => Container(
+          height: widget.stepperTheme.lineHeight,
+          width: widget.stepperTheme.lineWidth,
+          color: lineColor,
         );
 
     return Column(
-      crossAxisAlignment: stepperTheme.stepAlignment,
+      crossAxisAlignment: widget.stepperTheme.stepAlignment,
       children: List.generate(
-        steps.length,
+        widget.steps.length,
         (index) {
-          var lineColor = stepperTheme.activeLineColor != null
-              ? currentIndex == index
-                  ? stepperTheme.activeLineColor!
-                  : stepperTheme.lineColor
-              : stepperTheme.lineColor;
+          var lineColor = widget.stepperTheme.activeLineColor != null
+              ? widget.currentIndex == index
+                  ? widget.stepperTheme.activeLineColor!
+                  : widget.stepperTheme.lineColor
+              : widget.stepperTheme.lineColor;
           Widget stepIndicator;
-          stepIndicator = stepperTheme.stepIndicatorTheme.builder
-                  ?.call(index, currentIndex) ??
+          stepIndicator = widget.stepperTheme.stepIndicatorTheme.builder
+                  ?.call(index, widget.currentIndex) ??
               _StepIndicator(
                 step: index,
-                isZeroIndexed: isZeroIndexed,
-                stepperTheme: stepperTheme,
-                currentIndex: currentIndex,
-                indicator: steps[index].indicator,
+                isZeroIndexed: widget.isZeroIndexed,
+                stepperTheme: widget.stepperTheme,
+                currentIndex: widget.currentIndex,
+                indicator: widget.steps[index].indicator,
               );
-          if (currentIndex > index && stepperTheme.hideStepWhenDone) {
+          if (widget.currentIndex > index &&
+              widget.stepperTheme.hideStepWhenDone) {
             stepIndicator = const SizedBox.shrink();
           }
 
-          if (steps.length - 1 == index) {
-            stepIndicator = stepperTheme.stepIndicatorTheme.lastBuilder
-                    ?.call(index, currentIndex) ??
-                stepperTheme.stepIndicatorTheme.builder
-                    ?.call(index, currentIndex) ??
+          if (widget.steps.length - 1 == index) {
+            stepIndicator = widget.stepperTheme.stepIndicatorTheme.lastBuilder
+                    ?.call(index, widget.currentIndex) ??
+                widget.stepperTheme.stepIndicatorTheme.builder
+                    ?.call(index, widget.currentIndex) ??
                 _StepIndicator(
                   step: index,
-                  isZeroIndexed: isZeroIndexed,
-                  stepperTheme: stepperTheme,
-                  currentIndex: currentIndex,
-                  indicator: steps[index].indicator,
+                  isZeroIndexed: widget.isZeroIndexed,
+                  stepperTheme: widget.stepperTheme,
+                  currentIndex: widget.currentIndex,
+                  indicator: widget.steps[index].indicator,
                 );
           }
           Widget line;
 
-          if (stepperTheme.useDashedLine) {
+          if (widget.stepperTheme.useDashedLine) {
             line = dashedLine(lineColor);
           } else {
-            line = currentIndex > index
+            line = widget.currentIndex > index
                 ? solidLine(lineColor)
                 : dashedLine(lineColor);
           }
 
-          if (currentIndex - 1 > index && stepperTheme.hideStepWhenDone) {
+          if (widget.currentIndex - 1 > index &&
+              widget.stepperTheme.hideStepWhenDone) {
             line = const SizedBox.shrink();
           }
 
@@ -358,27 +372,51 @@ class _StepperLine extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Padding(
-                  padding: linePadding,
+                  padding: widget.linePadding,
                   child: Column(
                     children: [
-                      GestureDetector(
-                        onTap: () {},
-                        child: stepIndicator,
+                      VisibilityDetector(
+                        key: indicatorKeys[index],
+                        onVisibilityChanged: (info) {
+                          if (info.visibleFraction < 1) {
+                            setState(() {
+                              isVisible[index] = false;
+                            });
+                          }
+                        },
+                        child: isVisible[index]
+                            ? GestureDetector(
+                                onTap: () {},
+                                child: stepIndicator,
+                              )
+                            : const SizedBox(
+                                height: 4,
+                              ),
                       ),
-                      line,
+                      VisibilityDetector(
+                        key: lineKeys[index],
+                        onVisibilityChanged: (info) {
+                          if (info.visibleBounds.height > 45) {
+                            setState(() {
+                              isVisible[index] = true;
+                            });
+                          }
+                        },
+                        child: line,
+                      ),
                     ],
                   ),
                 ),
                 _StepContent(
-                  stepperTheme: stepperTheme,
-                  showOnlyCurrentStep: showOnlyCurrentStep,
-                  steps: steps,
+                  stepperTheme: widget.stepperTheme,
+                  showOnlyCurrentStep: widget.showOnlyCurrentStep,
+                  steps: widget.steps,
                   index: index,
-                  currentStep: currentIndex,
-                  lineHeight:
-                      currentIndex > index && stepperTheme.hideStepWhenDone
-                          ? 40
-                          : stepperTheme.emptyHeight,
+                  currentStep: widget.currentIndex,
+                  lineHeight: widget.currentIndex > index &&
+                          widget.stepperTheme.hideStepWhenDone
+                      ? 40
+                      : widget.stepperTheme.emptyHeight,
                 ),
               ],
             ),
